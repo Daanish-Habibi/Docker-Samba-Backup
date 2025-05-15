@@ -10,17 +10,6 @@ Designed for always-on, low-resource environments (like repurposed desktops or m
 
 ---
 
-## 🔧 Features
-
-- 🧠 **Simple architecture** using `docker-compose`
-- 🗃 **Samba server** container with customizable user/share access
-- 🔁 **Bash-based watcher** that detects file changes using `inotifywait`
-- 💾 **Automatic backup** to a second mounted drive using `rsync`
-- 🔋 **Low power & CPU usage** — ideal for 24/7 operation
-- ✅ Easy to customize, run, and share
-
----
-
 ## 📦 Stack
 
 | Component     | Purpose                        |
@@ -33,5 +22,4 @@ Designed for always-on, low-resource environments (like repurposed desktops or m
 
 ---
 
-## 📁 Folder Structure
 
