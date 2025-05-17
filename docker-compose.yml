@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  primary_samba:
+    image: dperson/samba
+    container_name: primary_samba
+    restart: unless-stopped
+    ports:
+      - "139:139"
+      - "445:445"
+    volumes:
+      - ./samba:/etc/samba
+      - /mnt/backup_drive:/mount/backup
+    environment:
+      - USERID=1000
+      - GROUPID=1000
+    command: >
+      -u "user;password"
+      -s "backup;/mount/backup;yes;no;no;user"
+
+  secondary_watcher:
+    image: alpine
+    container_name: secondary_watcher
+    restart: unless-stopped
+    volumes:
+      - /mnt/backup_drive:/data/source:ro
+      - /mnt/m2_drive:/data/dest
+      - ./watcher:/scripts
+    entrypoint: /scripts/script.sh

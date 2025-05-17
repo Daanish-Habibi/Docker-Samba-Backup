@@ -1,0 +1,2 @@
+-u "user;password"
+-s "backup;/mount/backup;yes;no;no;user"
