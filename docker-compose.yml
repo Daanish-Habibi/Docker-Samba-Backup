@@ -1,9 +1,7 @@
-version: "3.8"
-
 services:
-  primary_samba:
+  samba:
     image: dperson/samba
-    container_name: primary_samba
+    container_name: samba
     restart: unless-stopped
     ports:
       - "139:139"
@@ -18,9 +16,9 @@ services:
       -u "user;password"
       -s "backup;/mount/backup;yes;no;no;user"
 
-  secondary_watcher:
+  watcher:
     image: alpine
-    container_name: secondary_watcher
+    container_name: watcher
     restart: unless-stopped
     volumes:
       - /mnt/backup_drive:/data/source:ro

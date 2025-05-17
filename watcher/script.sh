@@ -1,27 +1,31 @@
 #!/bin/sh
 
-echo "🚀 Starting M.2 backup watcher container..."
+echo "🚀 Starting Samba-to-M.2 watcher sync..."
 
-# Install inotify and rsync (only needed once, kept here for container rebuilds)
+# Install dependencies (only needed in Alpine or minimal container)
 apk add --no-cache inotify-tools rsync
 
-# Sanity check
+# Sanity checks
 if [ ! -d /data/source ]; then
-  echo "❌ Source folder /data/source does not exist. Exiting."
+  echo "❌ ERROR: Source directory '/data/source' not found!"
   exit 1
 fi
 
 if [ ! -d /data/dest ]; then
-  echo "❌ Destination folder /data/dest does not exist. Exiting."
+  echo "❌ ERROR: Destination directory '/data/dest' not found!"
   exit 1
 fi
 
-echo "✅ Watching /data/source for changes..."
+# Initial sync
+echo "🔄 Performing initial full sync..."
+rsync -a --delete /data/source/ /data/dest/
+echo "✅ Initial sync complete."
 
-# Main watcher loop
+# Watch for file changes in source and re-sync on event
+echo "👀 Watching for changes in /data/source..."
 while true; do
   inotifywait -r -e modify,create,delete,move /data/source
-  echo "📁 Change detected. Syncing..."
+  echo "📁 Change detected. Syncing now..."
   rsync -a --delete /data/source/ /data/dest/
   echo "✅ Sync complete."
   sleep 1

@@ -1,14 +1,17 @@
 #!/bin/bash
 
-# Services to check
-SERVICES=("primary_samba" "secondary_watcher")
+# Handle optional "all" argument
+RUN_ALL="$1"
 
-# Start services conditionally
-for SERVICE in "${SERVICES[@]}"; do
-  if docker ps --filter "name=$SERVICE" --format '{{.Names}}' | grep -q "$SERVICE"; then
-    echo "⏩ $SERVICE already running, skipping."
+if [ "$RUN_ALL" = "all" ]; then
+  echo "🔁 Starting ALL containers (samba + watcher)..."
+  docker compose up -d samba secondary_watcher
+else
+  echo "🔍 Checking if 'samba' is running..."
+  if docker ps --filter "name=samba" --format '{{.Names}}' | grep -q "samba"; then
+    echo "⏩ 'samba' is already running. Skipping..."
   else
-    echo "▶️ Starting $SERVICE..."
-    docker compose up -d $SERVICE
+    echo "▶️ Starting 'samba'..."
+    docker compose up -d samba
   fi
-done
+fi
