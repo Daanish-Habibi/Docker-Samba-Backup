@@ -8,19 +8,26 @@ Designed for always-on, low-resource environments (like repurposed desktops or m
 
 ---
 ## Instructions
-- modify the following files to include the proper user information
-    - config.txt
-        - basic idea for -u → `user_name;password`
-            - setting up a use account with name and password
-        - basic idea for -s → `share_name;path;browseable;readonly;guest;user_list`
-            - share_name = name of the shared folder
-            - path = path to storage
-            - browseable = boolean for does it show in network directory
-            - readonly = boolean for reading content or read/write
-            - guest = allow guest access meaning no login required
-            - users = comma separated list of usernames setup with -u
-- run (remove `all` if you dont need backup hard drive)
-    - `bash script.sh all`
+
+- **Modify the following files to include the proper user information:**
+
+  #### `config.txt`
+
+  - **Basic idea for `-u`** → `user_name;password`
+    - Sets up a Samba user with username and password
+
+  - **Basic idea for `-s`** → `share_name;path;browseable;readonly;guest;user_list`
+    - `share_name` — name of the shared folder (what shows on the network)
+    - `path` — the path to the folder you want to share
+    - `browseable` — `yes` or `no`; whether it appears in network folder list
+    - `readonly` — `yes` (read-only) or `no` (read/write)
+    - `guest` — `yes` allows access with no login; `no` requires user
+    - `user_list` — comma-separated usernames (must match ones defined with `-u`)
+
+- **Run the stack** (remove `all` if you don’t need the backup sync service):
+
+  ```bash
+  bash start.sh all
 
 
 ## 📦 Stack
