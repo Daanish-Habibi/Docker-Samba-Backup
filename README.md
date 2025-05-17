@@ -20,7 +20,7 @@ Designed for always-on, low-resource environments (like repurposed desktops or m
             - guest = allow guest access meaning no login required
             - users = comma separated list of usernames setup with -u
 - run (remove `all` if you dont need backup hard drive)
-    - `bash script.sh`
+    - `bash script.sh all`
 
 
 ## 📦 Stack
