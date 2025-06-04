@@ -8,13 +8,11 @@ services:
       - "445:445"
     volumes:
       - ./samba:/etc/samba
-      - /mnt/backup_drive:/mount/backup
+      - /mnt/backup_drive:/mount
     environment:
       - USERID=1000
       - GROUPID=1000
-    command: >
-      -u "user;password"
-      -s "backup;/mount/backup;yes;no;no;user"
+    entrypoint: /etc/samba/entrypoint.sh
 
   watcher:
     image: alpine
